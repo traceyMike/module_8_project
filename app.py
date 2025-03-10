@@ -11,7 +11,7 @@ from datetime import datetime
 app = Flask(__name__) # creates new flask app then configure sqlite db after
 
 # Configure SQLite db
-app.config('SQLALCHEMY_DATABASE_URI') = 'sqlite:///todos.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///todos.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app) # db allows us to connect to db, get model, columns, etc.
 
@@ -42,7 +42,7 @@ def index():
     return render_template('index.html', todos=todos) # apply index.html code to result set of todos
 
 # Create a route for adding a new To Do item to the database
-@app.route('/add', methods=['GET'])
+@app.route('/add', methods=['POST'])
 def add(): 
     # get the title of the todo item from the HTML form on the webpage
     title = request.form.get('title')

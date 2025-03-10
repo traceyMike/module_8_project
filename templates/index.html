@@ -85,29 +85,26 @@
 <body>
     <div class="todo-container">
         <h1>My Todo List!</h1>
+        <!--form to add a new to-do item-->
         <form action="{{url_for('add') }}" method="post" class="todo-form">
-            <input type="text" id="todo-input" name="title" paceholder="Add a new to do">
+            <input type="text" id="todo-input" name="title" placeholder="Add a new to do">
             <button type="submit">Add Todo</button>
         </form>
+        <!--loop through each to-do item in the todos list-->
+        {% for todo in todos %}
         <div role="listitem" class="todo-item {% if todo.done %}done{% endif %}">
+            <!--display todo title-->
             <span>{{ todo.title }}</span>
+            <!--display the creation date-->
             <small>{{ todo.created_at.strftime('%Y-%m-%d %H:%M:%S') }}</small>
-            <div role="listitem" class="todo-item {% if todo.done %}done{% endif %}">
-                <span>{{ todo.title }}</span>
-                <small>{{ todo.create_at.strftime('%Y-%m-%d %H:%M:%S') }}</small>
-                <a href="{{ url_for('toggle', todo_id=todo.id) }}" aria-label="{% if todo.done %}Mark as undone{% else %}Mark as done{% endif %}">
-                    
-                </a>
-                <a href="{{ url_for('toggle', todo_id=todo.id) }}" aria-label="{% if todo.done %}Mark as undone{% else %}Mark as done{% endif %}">
-                    {% if todo.done %}🔄{% else %}✅{% endif %}
-                </a>
-
-            </div>
-            {% endfor %}
-            
+            <!-- toggle button to mark todo as done/undone-->
+             <a href="{{ url_for('toggle', todo_id=todo.id) }}" aria-label="{% if todo.done %}Mark as undone{% else %}Mark as done{% endif %}">
+                {% if todo.done %}Undo{% else %}Done{% endif %}
+             </a>
+             <!--delete button to remove the todo item-->
+             <a href="{{ url_for('delete', todo_id=todo.id) }}" aria-label="Delete todo">Delete</a>
         </div>
-
+        {% endfor %}
     </div>
-
 </body>
 </html>
